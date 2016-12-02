@@ -49,24 +49,30 @@ ratioTolerance = 0.15
 -- of times when we're near the fanOnTemp
 fanOnTemp = 160
 fanOffTemp = 158
+-- it seems like getGpio isn't doing what I want for the fan, so keep track
+-- of fan status on my own so I can make sure to keep the fan from bouncing
+-- on and off all the time.
+fanEnabled = false
 
 function doFan()
     local coolantTemp = getAnalog(coolantTempChannel)
     local engineTemp = getAnalog(engineTempChannel)
     if coolantTemp >= fanOnTemp or engineTemp >= fanOnTemp then
         -- enable the fan
-        if getGpio(fanEnableGpio) == 0 then
+        if not fanEnabled then
             println('fan on!')
         end
         setGpio(fanEnableGpio, 1)
-    elseif getGpio(fanEnableGpio) == 1 and (coolantTemp >= fanOffTemp or engineTemp >= fanOffTemp) then
+        fanEnabled = true
+    elseif fanEnabled and (coolantTemp >= fanOffTemp or engineTemp >= fanOffTemp) then
         setGpio(fanEnableGpio, 1)
         println('keeping fan on a little longer...')
     else
-        if getGpio(fanEnableGpio) == 1 then
-            --println('fan off!')
+        if fanEnabled then
+            println('fan off!')
         end
         setGpio(fanEnableGpio, 0)
+        fanEnabled = false
     end
 end
 
