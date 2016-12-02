@@ -1,0 +1,919 @@
+{
+  "rcpCfg": {
+    "analogCfg": {
+      "0": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ],
+          "scal": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ]
+        },
+        "max": 100,
+        "min": 0,
+        "nm": "FuelLevel",
+        "offset": 0.0,
+        "prec": 0,
+        "scalMod": 0,
+        "scaling": 1.0,
+        "sr": 5,
+        "ut": "F"
+      },
+      "1": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.4,
+            0.87,
+            1.88,
+            3.2,
+            4.72
+          ],
+          "scal": [
+            302.0,
+            239.0,
+            176.0,
+            122.0,
+            32.0
+          ]
+        },
+        "max": 300.0,
+        "min": 0.0,
+        "nm": "OilTemp",
+        "offset": 0.0,
+        "prec": 1,
+        "scalMod": 2,
+        "scaling": 1.0,
+        "sr": 5,
+        "ut": "F"
+      },
+      "2": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.5,
+            4.5,
+            4.5,
+            4.5,
+            4.5
+          ],
+          "scal": [
+            0.0,
+            150.0,
+            150.0,
+            150.0,
+            150.0
+          ]
+        },
+        "max": 20.0,
+        "min": 0.0,
+        "nm": "CoolantPressPSI",
+        "offset": 0.0,
+        "prec": 1,
+        "scalMod": 2,
+        "scaling": 1.0,
+        "sr": 1,
+        "ut": "PSI"
+      },
+      "3": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.42,
+            0.87,
+            1.88,
+            3.2,
+            4.72
+          ],
+          "scal": [
+            302.0,
+            239.0,
+            176.0,
+            122.0,
+            32.0
+          ]
+        },
+        "max": 300.0,
+        "min": 0.0,
+        "nm": "Coolant",
+        "offset": 0.0,
+        "prec": 1,
+        "scalMod": 2,
+        "scaling": 1.0,
+        "sr": 5,
+        "ut": "F"
+      },
+      "4": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.5,
+            4.5,
+            4.5,
+            4.5,
+            4.5
+          ],
+          "scal": [
+            0.0,
+            150.0,
+            150.0,
+            150.0,
+            150.0
+          ]
+        },
+        "max": 150,
+        "min": 0,
+        "nm": "OilPress",
+        "offset": 0.0,
+        "prec": 0,
+        "scalMod": 2,
+        "scaling": 1.0,
+        "sr": 10,
+        "ut": "PSI"
+      },
+      "5": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.4,
+            0.87,
+            1.88,
+            3.2,
+            4.72
+          ],
+          "scal": [
+            302.0,
+            239.0,
+            176.0,
+            122.0,
+            32.0
+          ]
+        },
+        "max": 300.0,
+        "min": 0.0,
+        "nm": "EngineTemp",
+        "offset": 0.0,
+        "prec": 1,
+        "scalMod": 2,
+        "scaling": 1.0,
+        "sr": 5,
+        "ut": "F"
+      },
+      "6": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ],
+          "scal": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ]
+        },
+        "max": 5.0,
+        "min": 0.0,
+        "nm": "Analog7",
+        "offset": 0.0,
+        "prec": 2,
+        "scalMod": 1,
+        "scaling": 1.0,
+        "sr": 0,
+        "ut": "Volts"
+      },
+      "7": {
+        "alpha": 1.0,
+        "map": {
+          "raw": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ],
+          "scal": [
+            0.0,
+            1.25,
+            2.5,
+            3.75,
+            5.0
+          ]
+        },
+        "max": 20.0,
+        "min": 0.0,
+        "nm": "Battery",
+        "offset": 0.0,
+        "prec": 2,
+        "scalMod": 1,
+        "scaling": 1.0,
+        "sr": 1,
+        "ut": "Volts"
+      }
+    },
+    "canCfg": {
+      "baud": [
+        500000,
+        500000
+      ],
+      "en": 0
+    },
+    "capabilities": {
+      "channels": {
+        "analog": 8,
+        "can": 2,
+        "gpio": 3,
+        "imu": 7,
+        "pwm": 4,
+        "timer": 3
+      },
+      "db": {
+        "script": 16384,
+        "tracks": 240
+      },
+      "flags": [],
+      "sampleRates": {
+        "gps": 50,
+        "sensor": 1000
+      }
+    },
+    "connCfg": {
+      "btCfg": {
+        "btEn": 1,
+        "name": "",
+        "pass": ""
+      },
+      "cellCfg": {
+        "apnHost": "epc.tmobile.com",
+        "apnPass": "",
+        "apnUser": "",
+        "cellEn": 1
+      },
+      "telCfg": {
+        "bgStream": 1,
+        "deviceId": "158L1UW"
+      }
+    },
+    "gpioCfg": {
+      "0": {
+        "max": 1.0,
+        "min": 0.0,
+        "mode": 0,
+        "nm": "GPIO1",
+        "prec": 1,
+        "sr": 0,
+        "ut": ""
+      },
+      "1": {
+        "max": 1.0,
+        "min": 0.0,
+        "mode": 0,
+        "nm": "GPIO2",
+        "prec": 1,
+        "sr": 0,
+        "ut": ""
+      },
+      "2": {
+        "max": 1.0,
+        "min": 0.0,
+        "mode": 0,
+        "nm": "GPIO3",
+        "prec": 1,
+        "sr": 0,
+        "ut": ""
+      }
+    },
+    "gpsCfg": {
+      "alt": 1,
+      "dist": 1,
+      "dop": 1,
+      "pos": 1,
+      "qual": 1,
+      "sats": 1,
+      "speed": 1,
+      "sr": 10
+    },
+    "imuCfg": {
+      "0": {
+        "alpha": 0.1,
+        "chan": 0,
+        "max": 3.0,
+        "min": -3.0,
+        "mode": 1,
+        "nm": "AccelX",
+        "prec": 2,
+        "sr": 50,
+        "ut": "G",
+        "zeroVal": -301
+      },
+      "1": {
+        "alpha": 0.1,
+        "chan": 1,
+        "max": 3.0,
+        "min": -3.0,
+        "mode": 1,
+        "nm": "AccelY",
+        "prec": 2,
+        "sr": 50,
+        "ut": "G",
+        "zeroVal": -649
+      },
+      "2": {
+        "alpha": 0.1,
+        "chan": 2,
+        "max": 3.0,
+        "min": -3.0,
+        "mode": 1,
+        "nm": "AccelZ",
+        "prec": 2,
+        "sr": 50,
+        "ut": "G",
+        "zeroVal": 1167
+      },
+      "3": {
+        "alpha": 0.1,
+        "chan": 3,
+        "max": 300.0,
+        "min": -300.0,
+        "mode": 1,
+        "nm": "Yaw",
+        "prec": 1,
+        "sr": 50,
+        "ut": "Deg/Sec",
+        "zeroVal": 204
+      },
+      "4": {
+        "alpha": 0.1,
+        "chan": 4,
+        "max": 300.0,
+        "min": -300.0,
+        "mode": 1,
+        "nm": "Pitch",
+        "prec": 1,
+        "sr": 50,
+        "ut": "Deg/Sec",
+        "zeroVal": 396
+      },
+      "5": {
+        "alpha": 0.1,
+        "chan": 5,
+        "max": 300.0,
+        "min": -300.0,
+        "mode": 1,
+        "nm": "Roll",
+        "prec": 1,
+        "sr": 50,
+        "ut": "Deg/Sec",
+        "zeroVal": 4
+      }
+    },
+    "lapCfg": {
+      "currentLap": {
+        "max": 0,
+        "min": 0,
+        "nm": "CurrentLap",
+        "prec": 0,
+        "sr": 10,
+        "ut": ""
+      },
+      "elapsedTime": {
+        "max": 0,
+        "min": 0,
+        "nm": "ElapsedTime",
+        "prec": 4,
+        "sr": 0,
+        "ut": "Min"
+      },
+      "lapCount": {
+        "max": 0,
+        "min": 0,
+        "nm": "LapCount",
+        "prec": 0,
+        "sr": 10,
+        "ut": ""
+      },
+      "lapTime": {
+        "max": 0,
+        "min": 0,
+        "nm": "LapTime",
+        "prec": 4,
+        "sr": 10,
+        "ut": "Min"
+      },
+      "predTime": {
+        "max": 0,
+        "min": 0,
+        "nm": "PredTime",
+        "prec": 4,
+        "sr": 5,
+        "ut": "Min"
+      },
+      "sector": {
+        "max": 0,
+        "min": 0,
+        "nm": "Sector",
+        "prec": 0,
+        "sr": 10,
+        "ut": ""
+      },
+      "sectorTime": {
+        "max": 0,
+        "min": 0,
+        "nm": "SectorTime",
+        "prec": 4,
+        "sr": 10,
+        "ut": "Min"
+      }
+    },
+    "obd2Cfg": {
+      "en": 0,
+      "pids": []
+    },
+    "pwmCfg": {
+      "0": {
+        "logMode": 1,
+        "max": 100,
+        "min": 0,
+        "nm": "PWM1",
+        "outMode": 1,
+        "prec": 0,
+        "sr": 0,
+        "stDutyCyc": 50,
+        "stPeriod": 100,
+        "ut": ""
+      },
+      "1": {
+        "logMode": 1,
+        "max": 100,
+        "min": 0,
+        "nm": "PWM2",
+        "outMode": 1,
+        "prec": 0,
+        "sr": 0,
+        "stDutyCyc": 50,
+        "stPeriod": 100,
+        "ut": ""
+      },
+      "2": {
+        "logMode": 1,
+        "max": 100,
+        "min": 0,
+        "nm": "PWM3",
+        "outMode": 1,
+        "prec": 0,
+        "sr": 0,
+        "stDutyCyc": 50,
+        "stPeriod": 100,
+        "ut": ""
+      },
+      "3": {
+        "logMode": 1,
+        "max": 100,
+        "min": 0,
+        "nm": "PWM4",
+        "outMode": 1,
+        "prec": 0,
+        "sr": 0,
+        "stDutyCyc": 50,
+        "stPeriod": 100,
+        "ut": ""
+      }
+    },
+    "scriptCfg": {
+      "data": "-- store tick rate as a variable for later use\ntickRate = 10\n\n--actually set the tick rate\nsetTickRate(tickRate)\n\n-- variables for automatic logging stop/start\n-- a counter for stopping the logging\nshutdownCounter = 0\n-- how long after shutdown should we keep logging? in seconds.\nshutdownTime = 30\n-- are we actually logging? keep track.\nisLogging = false\n\n-- variables for gear ratio calculations\n-- set up the virtual channel for gear ratio\n-- I know the supra only has ratios from -3.768 to 3.285\nratioId = addChannel(\"GearRatio\", 10, 3, -5, 5)\n-- set up the virtual channel for gear number\n-- note that you'd have to change the range if you have more gears\ngearId = addChannel(\"Gear\", 10, 0, -1, 5)\n-- reverse is a distinct ratio, so I can detect it\nreverseRatio = 3.768\n-- gear ratios for all the other gears\nfirstRatio = 3.285\nsecondRatio = 1.894\nthirdRatio = 1.275\nfourthRatio = 1.00\nfifthRatio = 0.783\n-- when using computed gear ratio for computation, how close\n-- do we have to be before we call it close enough?\nratioTolerance = 0.15\n\nfunction doLogging()\n    local gps = getGpsQuality()\n    -- I'm assuming rpm is channel 0 here\n    local rpm = getTimerRpm(0)\n    if gps > 0 and rpm > 0 and not isLogging then\n        -- start logging if we have a gps fix and the engine is turning\n        println('logging')\n        startLogging()\n        shutdownCounter = 0 \n        isLogging = true\n    elseif isLogging and rpm <= 0 then\n        -- if the engine stopped, start counting ticks then stop logging.\n        -- this keeps the log from constantly stopping if you stall a lot.\n        shutdownCounter = shutdownCounter + 1 \n        println('shutdown counter: ' ..shutdownCounter)\n        if shutdownCounter > (shutdownTime * tickRate) then\n            stopLogging()\n            println('stopping logging')\n            isLogging = false\n        end \n    end \nend\n\nfunction doGearRatio()\n    -- the supra has a transmission output shaft speed sensor.\n    -- I have this sensor wired to timer 1, so gear ratio calculation is easy\n    local engineRpm = getTimerRpm(0)\n    local driveshaftRpm = getTimerRpm(1)\n    local ratio = 0 \n    \n    if driveshaftRpm > 0 then\n        -- avoid dividing by zero\n        ratio = engineRpm/driveshaftRpm\n    end \n\n    local gearNum = 0\n\n    -- now use this computed ratio to figure out what gear we're in.\n    if math.abs(ratio - reverseRatio) < ratioTolerance then\n        -- make the ratio negative if we're in reverse.\n        -- this is probably not something we strictly need, but it is amusing.\n        ratio = -1 * ratio\n        gearNum = -1\n    elseif math.abs(ratio - firstRatio) < ratioTolerance then\n        gearNum = 1\n    elseif math.abs(ratio - secondRatio) < ratioTolerance then\n        gearNum = 2\n    elseif math.abs(ratio - thirdRatio) < ratioTolerance then\n        gearNum = 3\n    elseif math.abs(ratio - fourthRatio) < ratioTolerance then\n        gearNum = 4\n    elseif math.abs(ratio - fifthRatio) < ratioTolerance then\n        gearNum = 5\n    else\n        -- we must be coasting or stopped...\n        gearNum = 0\n    end\n\n    -- set the actual virtual channel outputs\n    setChannel(ratioId, ratio)\n    setChannel(gearId, gearNum)\nend\n\nfunction onTick()\n    doLogging()\n    doGearRatio()\nend\n\n",
+      "page": null
+    },
+    "timerCfg": {
+      "0": {
+        "alpha": 1.0,
+        "max": 10000,
+        "min": 0,
+        "mode": 0,
+        "nm": "RPM",
+        "ppr": 3,
+        "prec": 0,
+        "speed": 1,
+        "sr": 50,
+        "st": 0,
+        "ut": ""
+      },
+      "1": {
+        "alpha": 1.0,
+        "max": 5000,
+        "min": 0,
+        "mode": 0,
+        "nm": "Driveshaft",
+        "ppr": 39,
+        "prec": 0,
+        "speed": 1,
+        "sr": 50,
+        "st": 0,
+        "ut": "RPM"
+      },
+      "2": {
+        "alpha": 1.0,
+        "max": 10000,
+        "min": 0,
+        "mode": 0,
+        "nm": "RPM3",
+        "ppr": 1,
+        "prec": 0,
+        "speed": 1,
+        "sr": 0,
+        "st": 0,
+        "ut": ""
+      }
+    },
+    "trackCfg": {
+      "autoDetect": 1,
+      "rad": 0.0001,
+      "track": {
+        "id": 0,
+        "sec": [
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ],
+        "sf": [
+          0.0,
+          0.0
+        ],
+        "type": 0
+      }
+    },
+    "trackDb": {
+      "size": 3,
+      "tracks": [
+        {
+          "id": 1427687998,
+          "sec": [
+            [
+              38.161823,
+              -122.457962
+            ],
+            [
+              38.161381,
+              -122.45977
+            ],
+            [
+              38.161381,
+              -122.462891
+            ],
+            [
+              38.164463,
+              -122.462387
+            ],
+            [
+              38.163754,
+              -122.460388
+            ],
+            [
+              38.164215,
+              -122.458733
+            ],
+            [
+              38.165737,
+              -122.461914
+            ],
+            [
+              38.166096,
+              -122.46122
+            ],
+            [
+              38.164486,
+              -122.457298
+            ],
+            [
+              38.163223,
+              -122.455383
+            ],
+            [
+              38.162418,
+              -122.454628
+            ],
+            [
+              38.160442,
+              -122.452461
+            ],
+            [
+              38.160233,
+              -122.453079
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "sf": [
+            38.16153,
+            -122.454727
+          ],
+          "type": 0
+        },
+        {
+          "id": 1427687456,
+          "sec": [
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "sf": [
+            35.488762,
+            -119.544502
+          ],
+          "type": 0
+        },
+        {
+          "id": 1427688062,
+          "sec": [
+            [
+              39.536091,
+              -122.329193
+            ],
+            [
+              39.537636,
+              -122.32814
+            ],
+            [
+              39.539234,
+              -122.329002
+            ],
+            [
+              39.541485,
+              -122.329971
+            ],
+            [
+              39.542622,
+              -122.329063
+            ],
+            [
+              39.544407,
+              -122.329666
+            ],
+            [
+              39.545006,
+              -122.332123
+            ],
+            [
+              39.543827,
+              -122.334923
+            ],
+            [
+              39.540501,
+              -122.335648
+            ],
+            [
+              39.537968,
+              -122.334457
+            ],
+            [
+              39.541409,
+              -122.332794
+            ],
+            [
+              39.543865,
+              -122.331863
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ],
+            [
+              0.0,
+              0.0
+            ]
+          ],
+          "sf": [
+            39.538471,
+            -122.331184
+          ],
+          "type": 0
+        }
+      ]
+    },
+    "ver": {
+      "bugfix": 2,
+      "fname": "RaceCapture/Pro MK2",
+      "git_info": "2.9.2",
+      "major": 2,
+      "minor": 9,
+      "name": "RCP_MK2"
+    },
+    "wifiCfg": {
+      "active": false,
+      "ap": {
+        "active": false,
+        "channel": 1,
+        "encryption": "None",
+        "password": "",
+        "ssid": ""
+      },
+      "client": {
+        "active": false,
+        "password": "",
+        "ssid": ""
+      }
+    }
+  }
+}
