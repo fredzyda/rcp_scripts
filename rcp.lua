@@ -64,7 +64,7 @@ function doFan()
         println('keeping fan on a little longer...')
     else
         if getGpio(fanEnableGpio) == 1 then
-            println('fan off!')
+            --println('fan off!')
         end
         setGpio(fanEnableGpio, 0)
     end
