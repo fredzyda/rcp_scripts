@@ -13,9 +13,13 @@ shutdownTime = 30
 isLogging = false
 
 -- keep track of all the analog channel numbers
-coolantTempChannel = 0
-engineTempChannel = 1
-oilTempChannel = 2
+fuelLevelChannel = 0
+oilTempChannel = 1
+coolantPressureChannel = 2
+coolantTempChannel = 3
+oilPressureChannel = 4
+engineTempChannel = 5
+batteryVoltageChannel = 7
 
 -- keep track of the gpio channel meaning
 fanEnableGpio = 0
@@ -64,6 +68,7 @@ function doFan()
         end
         setGpio(fanEnableGpio, 0)
     end
+end
 
 function doLogging()
     local gps = getGpsQuality()
