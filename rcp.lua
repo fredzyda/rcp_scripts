@@ -12,6 +12,15 @@ shutdownTime = 30
 -- are we actually logging? keep track.
 isLogging = false
 
+-- keep track of all the analog channel numbers
+coolantTempChannel = 0
+engineTempChannel = 1
+oilTempChannel = 2
+
+-- keep track of the gpio channel meaning
+fanEnableGpio = 0
+warnGpio = 1
+
 -- variables for gear ratio calculations
 -- set up the virtual channel for gear ratio
 -- I know the supra only has ratios from -3.768 to 3.285
@@ -30,6 +39,31 @@ fifthRatio = 0.783
 -- when using computed gear ratio for computation, how close
 -- do we have to be before we call it close enough?
 ratioTolerance = 0.15
+
+-- what temperature are we going to turn the fan on and off?
+-- I'm making them different so the fan doesn't turn on and off a bunch
+-- of times when we're near the fanOnTemp
+fanOnTemp = 160
+fanOffTemp = 158
+
+function doFan()
+    local coolantTemp = getAnalog(coolantTempChannel)
+    local engineTemp = getAnalog(engineTempChannel)
+    if coolantTemp >= fanOnTemp or engineTemp >= fanOnTemp then
+        -- enable the fan
+        if getGpio(fanEnableGpio) == 0 then
+            println('fan on!')
+        end
+        setGpio(fanEnableGpio, 1)
+    elseif getGpio(fanEnableGpio) == 1 and (coolantTemp >= fanOffTemp or engineTemp >= fanOffTemp) then
+        setGpio(fanEnableGpio, 1)
+        println('keeping fan on a little longer...')
+    else
+        if getGpio(fanEnableGpio) == 1 then
+            println('fan off!')
+        end
+        setGpio(fanEnableGpio, 0)
+    end
 
 function doLogging()
     local gps = getGpsQuality()
@@ -95,6 +129,7 @@ function doGearRatio()
 end
 
 function onTick()
+    doFan()
     doLogging()
     doGearRatio()
 end
