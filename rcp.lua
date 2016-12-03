@@ -54,6 +54,57 @@ fanOffTemp = 158
 -- on and off all the time.
 fanEnabled = false
 
+-- warning function stuff. I chose these values by searching for mechanical
+-- warning light switches and looking at their setpoints.
+warningCoolantTemperature = 215
+warningOilTemperature = 255
+warningOilPressure = 3 -- should really be a function of RPM
+warningLowCoolantPressure = 0
+warningHighCoolantPressure = 16
+coolantPressureMinValidTemp = 100 -- coolant pressure doesn't develop until things get warm
+
+function doWarn()
+    -- I'm assuming rpm is channel 0 here
+    local rpm = getTimerRpm(0)
+    local coolantTemp = getAnalog(coolantTempChannel)
+    local engineTemp = getAnalog(engineTempChannel)
+    local oilTemp = getAnalog(oilTempChannel)
+    local oilPressure = getAnalog(oilPressureChannel)
+    local coolantPressure = getAnalog(coolantPressureChannel)
+    if rpm > 200 then
+        -- if the engine is spinning even a bit, start caring about warnings..
+        if oilPressure < warningOilPressure then
+            println('oil pressure low!')
+            setGpio(warnGpio, 1)
+        elseif coolantTemp >= warningCoolantTemperature then
+            println('coolant temp high!')
+            setGpio(warnGpio, 1)
+        elseif engineTemp >= warningCoolantTemperature then
+            println('engine temp high!')
+            setGpio(warnGpio, 1)
+        elseif oilTemp >= warningOilTemperature then
+            println('oil temp high!')
+            setGpio(warnGpio, 1)
+        elseif coolantTemp > coolantPressureMinValidTemp then
+            -- the coolan pressure only seems to develop past a certain temperature..
+            if coolantPressure <= warningLowCoolantPressure then
+                println('coolant pressure low!')
+                setGpio(warnGpio, 1)
+            elseif coolantPressure >= warningHighCoolantPressure then
+                println('coolant pressure high!')
+                setGpio(warnGpio, 1)
+            end
+        else
+            -- if there's nothing else going wrong, turn off the warning!
+            setGpio(warnGpio, 0)
+        end
+    else
+        -- if the engine is not running, turn off the warning.
+        -- TODO: initial test and sticky warning after shutdown?
+        setGpio(warnGpio, 0)
+    end
+end
+
 function doFan()
     local coolantTemp = getAnalog(coolantTempChannel)
     local engineTemp = getAnalog(engineTempChannel)
@@ -140,6 +191,7 @@ function doGearRatio()
 end
 
 function onTick()
+    doWarn()
     doFan()
     doLogging()
     doGearRatio()
