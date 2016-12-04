@@ -47,8 +47,13 @@ ratioTolerance = 0.15
 -- what temperature are we going to turn the fan on and off?
 -- I'm making them different so the fan doesn't turn on and off a bunch
 -- of times when we're near the fanOnTemp
-fanOnTemp = 160
-fanOffTemp = 158
+fanOnSlowTemp = 160
+fanOffSlowTemp = 158
+-- turn on the fan at a higher temperature when going fast
+fanOnFastTemp = 225
+fanOffFastTemp = 220
+-- what is the speed we're calling fast?
+fanFastThreshold = 20
 -- it seems like getGpio isn't doing what I want for the fan, so keep track
 -- of fan status on my own so I can make sure to keep the fan from bouncing
 -- on and off all the time.
@@ -108,22 +113,43 @@ end
 function doFan()
     local coolantTemp = getAnalog(coolantTempChannel)
     local engineTemp = getAnalog(engineTempChannel)
-    if coolantTemp >= fanOnTemp or engineTemp >= fanOnTemp then
-        -- enable the fan
-        if not fanEnabled then
-            println('fan on!')
+    local speed = getGpsSpeed()
+    if speed < fanFastThreshold then
+        if coolantTemp >= fanOnSlowTemp or engineTemp >= fanOnSlowTemp then
+            -- enable the fan
+            if not fanEnabled then
+                println('fan on!')
+            end
+            setGpio(fanEnableGpio, 1)
+            fanEnabled = true
+        elseif fanEnabled and (coolantTemp >= fanOffSlowTemp or engineTemp >= fanOffSlowTemp) then
+            setGpio(fanEnableGpio, 1)
+            println('keeping fan on a little longer...')
+        else
+            if fanEnabled then
+                println('fan off!')
+            end
+            setGpio(fanEnableGpio, 0)
+            fanEnabled = false
         end
-        setGpio(fanEnableGpio, 1)
-        fanEnabled = true
-    elseif fanEnabled and (coolantTemp >= fanOffTemp or engineTemp >= fanOffTemp) then
-        setGpio(fanEnableGpio, 1)
-        println('keeping fan on a little longer...')
     else
-        if fanEnabled then
-            println('fan off!')
+        if coolantTemp >= fanOnFastTemp or engineTemp >= fanOnFastTemp then
+            -- enable the fan
+            if not fanEnabled then
+                println('fan on!')
+            end
+            setGpio(fanEnableGpio, 1)
+            fanEnabled = true
+        elseif fanEnabled and (coolantTemp >= fanOffFastTemp or engineTemp >= fanOffFastTemp) then
+            setGpio(fanEnableGpio, 1)
+            println('keeping fan on a little longer...')
+        else
+            if fanEnabled then
+                println('fan off!')
+            end
+            setGpio(fanEnableGpio, 0)
+            fanEnabled = false
         end
-        setGpio(fanEnableGpio, 0)
-        fanEnabled = false
     end
 end
 
