@@ -23,22 +23,35 @@ class RcpLog:
         # list the files in the directory and sort them for the .LOG extension all at once
         logs = [x for x in os.listdir(path) if os.path.splitext(x)[1] == '.LOG']
 
+        # sort the logs by filesize to hide my dumb repeated parsing problem (for now)
+        logs = sorted(logs, key=lambda name: os.path.getsize(os.path.join(path, name)))
+
         # we have to start with something, so load up the first log in the list.
-        retval = RcpLog(os.path.join(path, logs[0]))
+        retval = RcpLog(os.path.join(path, logs[0]), skipParse = True)
 
         # now load all the rest of the logs and merge them with this log.
         for logname in logs[1:]:
-            log = RcpLog(os.path.join(path, logname))
+            log = RcpLog(os.path.join(path, logname), skipParse = True)
             retval.merge(log)
+
+        # at the very end, do the parsing, only once...
+        logging.info('turning parsing back on for %d rawlines!', len(retval.rawlines))
+        retval.skipParse = False
+        retval.parseRawlines()
 
         return retval
 
-    def __init__(self, filename=None):
+    def __init__(self, filename=None, skipParse=False):
         """the constructor. load the file if one was specified, otherwise set everything
            to null.
+           skipParse is a workaround for the multiple parsing madness that happens if you
+           open a file only to immediately merge it with another file and then merge that
+           result with yet more files. if it is true, you won't do any actual parsing until
+           it is reset to false.
         """
         # setup all the instance fields
         self.filename = filename
+        self.skipParse = skipParse
         self.descriptions = []
         self.nameToDescriptionDict = {}
         self.data = {}
@@ -128,6 +141,9 @@ class RcpLog:
 
             logging.info('found new field %s', description.name)
 
+        if self.skipParse:
+            return
+
         # now parse all the raw data into DataPoints
         for line in self.rawlines[1:]:
             # UTC time in milliseconds is always the second entry
@@ -140,7 +156,7 @@ class RcpLog:
 
             timestamp = int(line[1])
 
-            for i in range(len(self.descriptions)):
+            for i in xrange(len(self.descriptions)):
                 if line[i] != '':
                     # many fields are empty because some sensors log at way higher
                     # rates than others. we only care about the data that's actually there.
