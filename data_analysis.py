@@ -6,6 +6,7 @@
 import csv
 import collections
 import logging
+import os
 
 # set log level
 logging.basicConfig(level=logging.INFO)
@@ -13,6 +14,25 @@ logging.basicConfig(level=logging.INFO)
 class RcpLog:
     """this class represents an RCP log file.
     """
+    @staticmethod
+    def loadAndMergeDirectory(path):
+        """loads all the .LOG files in the given directory and merges them together.
+           this should result in one huge log object that represents all the data
+           in the directory.
+        """
+        # list the files in the directory and sort them for the .LOG extension all at once
+        logs = [x for x in os.listdir(path) if os.path.splitext(x)[1] == '.LOG']
+
+        # we have to start with something, so load up the first log in the list.
+        retval = RcpLog(os.path.join(path, logs[0]))
+
+        # now load all the rest of the logs and merge them with this log.
+        for logname in logs[1:]:
+            log = RcpLog(os.path.join(path, logname))
+            retval.merge(log)
+
+        return retval
+
     def __init__(self, filename=None):
         """the constructor. load the file if one was specified, otherwise set everything
            to null.
@@ -38,16 +58,48 @@ class RcpLog:
     def load(self):
         """load the log from the path in self.filename
         """
+        logging.info('loading %s...', self.filename)
         with open(self.filename, 'r') as f:
             reader = csv.reader(f)
             self.rawlines = [line for line in reader]
             logging.info("read %d lines", len(self.rawlines))
             self.parseRawlines()
 
+    def merge(self, other):
+        """merge other log into this log. this is handy since the RCP writes
+           a new log file every time it stops logging. this will do things the
+           kind of dumb way for now and just merge the raw lines, sort them by
+           timestamp and then reparse everything
+           NOTE: the headers for both logs had better be the same. if they aren't,
+                 this process should fail...
+        """
+        logging.info('attempting to merge %s and %s', self.filename, other.filename)
+
+        if self.headerLine != other.headerLine:
+            logging.error("can not merge logs! headers don't match!")
+            logging.error(str(map(None, self.headerLine, other.headerLine)))
+            return
+
+        # assuming we are in the case where the headers match, start by merging
+        # the other rawlines into self.rawlines, making sure to skip the second header
+        logging.info('adding %d new lines to the existing %d lines',
+                len(other.rawlines), len(self.rawlines))
+        self.rawlines += other.rawlines[1:]
+
+        # now sort the rawlines by UTC timestamp, which I'm pretty sure is always the
+        # second field
+        logging.info('sorting rawlines...')
+        # mildly annoying sort while keeping the first line where it belongs
+        self.rawlines = self.rawlines[:1] + sorted(self.rawlines[1:],key=lambda line: line[1])
+        logging.info('sorting complete!')
+        # now reparse the newly longer rawlines
+        self.parseRawlines()
+
     def parseRawlines(self):
         """this method is kind of part of load, but it also makes it way easier
            to merge files and then reparse the resulting concatenated rawlines
         """
+        logging.info('parsing %d lines', len(self.rawlines))
         # the file always begins with the header line
         self.headerLine = self.rawlines[0]
 
@@ -56,6 +108,8 @@ class RcpLog:
         self.descriptions = []
         self.data = {}
         self.nameToDescriptionDict = {}
+
+        logging.info('got %d data fields', len(self.headerLine))
 
         # now parse out the header into descriptions.
         for field in self.headerLine:
@@ -78,6 +132,12 @@ class RcpLog:
         for line in self.rawlines[1:]:
             # UTC time in milliseconds is always the second entry
             # I think it is sort of safe to assume that...
+            # sadly, sometimes there is a totally blank line at the start of the log, so
+            # if there is no timestamp, just skip the line and print a warning.
+            if line[1] == '':
+                logging.warning('skipping apparently empty line %s', line)
+                continue
+
             timestamp = int(line[1])
 
             for i in range(len(self.descriptions)):
