@@ -7,6 +7,7 @@ import csv
 import collections
 import logging
 import os
+import numpy
 
 # set log level
 logging.basicConfig(level=logging.INFO)
@@ -167,3 +168,34 @@ class RcpLog:
         # fire off a quick logging message about what we just loaded.
         for description in self.descriptions:
             logging.info("Parsed %d %s records", len(self.data[description]), description.name)
+
+    def printStats(self):
+        """print some basic statistics on the data to the logger...
+        """
+        # for now, loop over each kind of data and print some stats...
+        for description in self.descriptions:
+            d = self.data[description]
+            values = [x.value for x in d]
+            meanVal = numpy.mean(values)
+            maxVal = numpy.max(values)
+            minVal = numpy.min(values)
+            std = numpy.std(values)
+
+            logging.info("%s:\n\tminimum: %f\n\tmaximum: %f\n\tmean: %f\n\tstd: %f\n",
+                    description.name, minVal, maxVal, meanVal, std)
+
+        # do a second pass to figure out how much time this log represents.
+        lastTime = 0
+        totalTime = 0
+        sessions = 0
+        for t in self.data[self.nameToDescriptionDict['Utc']]:
+            if (t.timestamp - lastTime) > 60000:
+                # consider time gaps of more than a minute new sessions
+                sessions += 1
+            else:
+                totalTime += t.timestamp - lastTime
+
+            lastTime = t.timestamp
+
+        logging.info('a total of %d sessions were logged over %f minutes',
+                sessions, totalTime/60000.)
