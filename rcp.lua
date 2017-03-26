@@ -47,13 +47,13 @@ ratioTolerance = 0.15
 -- what temperature are we going to turn the fan on and off?
 -- I'm making them different so the fan doesn't turn on and off a bunch
 -- of times when we're near the fanOnTemp
-fanOnSlowTemp = 160
-fanOffSlowTemp = 158
+fanOnSlowTemp = 170
+fanOffSlowTemp = 168
 -- turn on the fan at a higher temperature when going fast
 fanOnFastTemp = 225
 fanOffFastTemp = 220
 -- what is the speed we're calling fast?
-fanFastThreshold = 20
+fanFastThreshold = 10
 -- it seems like getGpio isn't doing what I want for the fan, so keep track
 -- of fan status on my own so I can make sure to keep the fan from bouncing
 -- on and off all the time.
@@ -64,8 +64,8 @@ fanEnabled = false
 warningCoolantTemperature = 215
 warningOilTemperature = 255
 warningOilPressure = 3 -- should really be a function of RPM
-warningLowCoolantPressure = -1 -- we've been having problems with this sensor, so basically turn off the low warning
-warningHighCoolantPressure = 16
+warningLowCoolantPressure = -16 -- we've been having problems with this sensor, so basically turn off the low warning
+warningHighCoolantPressure = 15
 coolantPressureMinValidTemp = 100 -- coolant pressure doesn't develop until things get warm
 
 function doWarn()
