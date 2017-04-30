@@ -1,4 +1,4 @@
-#/usr/bin/python
+#!/usr/bin/python
 
 # a script for analyzing RCP data. the goal here is to do things like look at long
 # term trends over multiple races.
@@ -8,6 +8,7 @@ import collections
 import logging
 import os
 import numpy
+import argparse
 
 # set log level
 logging.basicConfig(level=logging.INFO)
@@ -199,3 +200,28 @@ class RcpLog:
 
         logging.info('a total of %d sessions were logged over %f minutes',
                 sessions, totalTime/60000.)
+
+def main():
+    """a main method to call so I can use this library as a script."""
+    # just set up some simple arguments so we can decide what to do
+    parser = argparse.ArgumentParser(description="analyze some race capture data!")
+    parser.add_argument('-m', '--merge', help='path to directory of files to merge')
+    parser.add_argument('-o', '--outpath', help='path of the merged output file')
+    parser.add_argument('-s', '--stats', help='print statistics on the data', action='store_true')
+
+    args = parser.parse_args()
+
+    merged = None
+
+    if args.merge != '':
+        logging.info('merging logs at path %s' % (args.merge))
+        merged = RcpLog.loadAndMergeDirectory(args.merge)
+    if args.stats and (merged is not None):
+        logging.info('printing statistics for files loaded!')
+        merged.printStats()
+    if args.outpath:
+        logging.info('writing output to new file %s' % (args.outpath))
+
+if __name__ == "__main__":
+    main()
+
