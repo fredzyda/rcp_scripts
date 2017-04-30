@@ -86,6 +86,22 @@ class RcpLog:
             logging.info("read %d lines", len(self.rawlines))
             self.parseRawlines()
 
+    def save(self, filename=None):
+        """write the file out to disk. the filename input parameter will override the
+           self.filename member if it is set.
+        """
+        name = self.filename
+        if filename is not None:
+            name = filename
+
+        logging.info('writing data to %s...' % name)
+
+        with open(name, 'w') as f:
+            writer = csv.writer(f)
+            logging.info('writing %d lines' % len(self.rawlines))
+            writer.writerows(self.rawlines)
+            logging.info('done!')
+
     def merge(self, other):
         """merge other log into this log. this is handy since the RCP writes
            a new log file every time it stops logging. this will do things the
@@ -225,8 +241,9 @@ def main():
     if args.stats and (merged is not None):
         logging.info('printing statistics for files loaded!')
         merged.printStats()
-    if args.outpath:
+    if args.outpath and (merged is not None):
         logging.info('writing output to new file %s' % (args.outpath))
+        merged.save(filename=args.outpath)
 
 if __name__ == "__main__":
     main()
