@@ -23,7 +23,13 @@ class RcpLog:
            in the directory.
         """
         # list the files in the directory and sort them for the .LOG extension all at once
-        logs = [x for x in os.listdir(path) if os.path.splitext(x)[1] == '.LOG']
+        logs = [x for x in os.listdir(path) if os.path.splitext(x)[1].upper() == '.LOG']
+
+        logging.info('found %d log files in %s' % (len(logs), path))
+
+        if len(logs) <= 0:
+            logging.error('no logs found in directory! nothing to merge!')
+            return None
 
         # sort the logs by filesize to hide my dumb repeated parsing problem (for now)
         logs = sorted(logs, key=lambda name: os.path.getsize(os.path.join(path, name)))
